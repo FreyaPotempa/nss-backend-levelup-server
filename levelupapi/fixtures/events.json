@@ -1,0 +1,20 @@
+[
+  {
+    "model": "levelupapi.event",
+    "fields": {
+      "description": "let's trade sheep!",
+      "date": "2023-05-10",
+      "time": "12:30",
+      "organizer_id": 1
+    }
+  },
+  {
+    "model": "levelupapi.event",
+    "fields": {
+      "description": "role play day",
+      "date": "2023-07-15",
+      "time": "13:30",
+      "organizer_id": 1
+    }
+  }
+]
