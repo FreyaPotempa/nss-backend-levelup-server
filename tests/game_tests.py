@@ -4,14 +4,14 @@ from rest_framework.test import APITestCase
 from levelupapi.models import GameType, Gamer
 from rest_framework.authtoken.models import Token
 import os
+from django.test import override_settings
 
 
 class GameTests(APITestCase):
-    # os.environ.__setattr__('MY_SECRET_KEY', "123")
-    #  look up how to set an os.environ attribute
     # Add any fixtures you want to run to build the test database
     fixtures = ['users', 'tokens', 'gamers', 'game_types', 'games', 'events']
 
+    @override_settings(MY_SECRET_KEY="123")
     def setUp(self):
         self.gamer = Gamer.objects.first()
         token = Token.objects.get(user=self.gamer.user)
