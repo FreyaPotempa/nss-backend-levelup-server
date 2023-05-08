@@ -1,1 +1,14 @@
-SELECT * FROM levelupapi_event
+CREATE TABLE `levelupapi_event` (
+`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+`description` TEXT NOT NULL,
+`date` TEXT NOT NULL,
+`time` TEXT NOT NULL,
+`organizer` INTEGER NOT NULL,
+`game` INTEGER NOT NULL
+)
+
+CREATE TABLE `levelupapi_event_attendees` (
+`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+`gamer_id` INTEGER NOT NULL,
+`event_id` INTEGER NOT NULL
+)

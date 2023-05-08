@@ -15,9 +15,12 @@ class GameView(ViewSet):
         Returns:
             Response -- JSON serialized game type
         """
-        game = Game.objects.get(pk=pk)
-        serializer = GameSerializer(game)
-        return Response(serializer.data)
+        try:
+            game = Game.objects.get(pk=pk)
+            serializer = GameSerializer(game)
+            return Response(serializer.data)
+        except Game.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
     def list(self, request):
         """Handle GET requests to get all game types
@@ -27,6 +30,11 @@ class GameView(ViewSet):
         """
 
         games = Game.objects.all()
+
+        game_type = request.query_params.get('type', None)
+        if game_type is not None:
+            games = games.filter(game_type_id=game_type)
+
         serializer = GameSerializer(games, many=True)
         return Response(serializer.data)
 
@@ -48,7 +56,7 @@ class GameView(ViewSet):
             game_type=game_type
         )
         serializer = GameSerializer(game)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, pk):
         """Handle PUT requests for a game
@@ -83,3 +91,4 @@ class GameSerializer(serializers.ModelSerializer):
         model = Game
         fields = ('id', 'title', 'maker', 'num_of_players',
                   'skill_level', 'game_type_id', 'gamer_id')
+        depth = 1
