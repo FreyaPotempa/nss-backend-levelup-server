@@ -13,19 +13,16 @@ class UserGameList(View):
             # TODO: Write a query to get all games along with the gamer first name, last name, and id
             db_cursor.execute("""
                 SELECT
-                    ur.id,
-                    ur.first_name,
-                    ur.last_name,
-                    g.id,
-                    g.title,
-                    g.maker,
-                    g.num_of_players,
-                    g.game_type_id,
-                    g.skill_level,
-                    g.game_type_id
-                    FROM levelupapi_game g
-                    JOIN auth_user ur
-                     ON g.gamer_id = ur.id
+                    id,
+                    title,
+                    maker,
+                    game_type_id,
+                    num_of_players,
+                    skill_level,
+                    user_id,
+                    full_name
+                FROM
+                    GAMES_BY_USER
             """)
             # Pass the db_cursor to the dict_fetch_all function to turn the fetch_all() response into a dictionary
             dataset = dict_fetch_all(db_cursor)
@@ -86,8 +83,7 @@ class UserGameList(View):
                     # If the user is not on the games_by_user list, create and add the user to the list
                     games_by_user.append({
                         "id": row['id'],
-                        "first_name": row['first_name'],
-                        "last_name": row['last_name'],
+                        "full_name": row['full_name'],
                         "games": [game]
                     })
 
